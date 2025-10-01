@@ -171,10 +171,43 @@ install_from_github() {
             "standards/code-style/${file}.md"
     done
 
+    # Download AGENTS templates
+    echo ""
+    echo "📥 Downloading AGENTS templates to $target_dir/agents/"
+    for scope in global project spec spec-task; do
+        mkdir -p "$target_dir/agents/${scope}"
+        download_file "${BASE_URL}/agents/${scope}/AGENTS.md" \
+            "$target_dir/agents/${scope}/AGENTS.md" \
+            "$overwrite_inst" \
+            "agents/${scope}/AGENTS.md"
+    done
+
+    # Download cursor command pack
+    echo ""
+    echo "📥 Downloading Cursor command pack to $target_dir/cursor/commands/"
+    for cmd in plan-product create-spec create-tasks execute-tasks analyze-product; do
+        mkdir -p "$target_dir/cursor/commands"
+        download_file "${BASE_URL}/cursor/commands/${cmd}.md" \
+            "$target_dir/cursor/commands/${cmd}.md" \
+            "$overwrite_inst" \
+            "cursor/commands/${cmd}.md"
+    done
+
+    # Download Codex command pack
+    echo ""
+    echo "📥 Downloading Codex prompt pack to $target_dir/codex/prompts/"
+    for cmd in plan-product create-spec create-tasks execute-tasks analyze-product; do
+        mkdir -p "$target_dir/codex/prompts"
+        download_file "${BASE_URL}/codex/prompts/${cmd}.md" \
+            "$target_dir/codex/prompts/${cmd}.md" \
+            "$overwrite_inst" \
+            "codex/prompts/${cmd}.md"
+    done
+
     # Download commands (only if requested)
     if [ "$include_commands" = true ]; then
         echo ""
-        echo "📥 Downloading command files to $target_dir/commands/"
+        echo "📥 Downloading legacy command files to $target_dir/commands/"
         mkdir -p "$target_dir/commands"
 
         for cmd in plan-product create-spec create-tasks execute-tasks analyze-product; do

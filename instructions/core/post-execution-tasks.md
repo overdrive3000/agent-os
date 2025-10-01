@@ -18,18 +18,16 @@ Follow these steps to mark your progress updates, create a recap, and deliver th
 
 <process_flow>
 
-<step number="1" subagent="test-runner" name="test_suite_verification">
+<step number="1" name="test_suite_verification">
 
 ### Step 1: Run All Tests
 
-Use the test-runner subagent to run the ALL tests in the application's test suite to ensure no regressions and fix any failures until all tests pass.
+Run the entire test suite (using your tool's helper or the CLI) to ensure no regressions remain. Fix any failures before continuing.
 
 <instructions>
-  ACTION: Use test-runner subagent
-  REQUEST: "Run the full test suite"
-  WAIT: For test-runner analysis
-  PROCESS: Fix any reported failures
-  REPEAT: Until all tests pass
+  ACTION: Execute the full test suite command
+  CAPTURE: Failures with file/line references and summarize fixes
+  REPEAT: Until all tests pass without intervention
 </instructions>
 
 <test_execution>
@@ -47,21 +45,16 @@ Use the test-runner subagent to run the ALL tests in the application's test suit
 
 </step>
 
-<step number="2" subagent="git-workflow" name="git_workflow">
+<step number="2" name="git_workflow">
 
 ### Step 2: Git Workflow
 
-Use the git-workflow subagent to create git commit, push to GitHub, and create pull request for the implemented features.
+Create a clean git commit, push your branch, and prepare a pull request for the implemented features. Use automated helpers if available or run the git commands manually.
 
 <instructions>
-  ACTION: Use git-workflow subagent
-  REQUEST: "Complete git workflow for [SPEC_NAME] feature:
-            - Spec: [SPEC_FOLDER_PATH]
-            - Changes: All modified files
-            - Target: main branch
-            - Description: [SUMMARY_OF_IMPLEMENTED_FEATURES]"
-  WAIT: For workflow completion
-  PROCESS: Save PR URL for summary
+  ACTION: Stage changes (`git add`), commit with a descriptive message, and push to the remote branch
+  OPTIONAL: Open a PR draft or create the PR with summary/test notes
+  RECORD: Keep the PR URL for the completion summary
 </instructions>
 
 <commit_process>
@@ -81,28 +74,26 @@ Use the git-workflow subagent to create git commit, push to GitHub, and create p
 
 </step>
 
-<step number="3" subagent="project-manager" name="tasks_list_check">
+<step number="3" name="tasks_list_check">
 
 ### Step 3: Tasks Completion Verification
 
-Use the project-manager subagent to read the current spec's tasks.md file and verify that all tasks have been properly marked as complete with [x] or documented with blockers.
+Review the spec’s `tasks.md` and confirm that all tasks are marked complete (`[x]`) or clearly documented as blocked (with `⚠️`). Update the file manually if anything is missing.
 
 <instructions>
-  ACTION: Use project-manager subagent
-  REQUEST: "Verify that all tasks have been marked with their outcome:
-            - Read [SPEC_FOLDER_PATH]/tasks.md
-            - Check all tasks are marked complete with [x] or (in rare cases) a documented blocking issue."
-  WAIT: For task verification analysis
-  PROCESS: Update task status as needed
+  ACTION: Open `.agent-os/specs/<spec-folder>/tasks.md`
+  CHECK: Ensure every parent task and subtask is marked `[x]` when complete
+  BLOCKERS: If work remains after three attempts, note `⚠️ Blocking issue: ...`
+  UPDATE: Save the file with the latest status for future runs
 </instructions>
 
 </step>
 
-<step number="4" subagent="project-manager" name="roadmap_progress_check">
+<step number="4" name="roadmap_progress_check">
 
 ### Step 4: Roadmap Progress Update (conditional)
 
-Use the project-manager subagent to read @.agent-os/product/roadmap.md and mark roadmap items as complete with [x] ONLY IF the executed tasks have completed any roadmap item(s) and the spec completes that item.
+Check @.agent-os/product/roadmap.md and mark items complete (`[x]`) only if the executed tasks fulfill the roadmap milestone. Update notes as needed.
 
 <conditional_execution>
   <preliminary_check>
@@ -132,21 +123,17 @@ Use the project-manager subagent to read @.agent-os/product/roadmap.md and mark 
 
 </step>
 
-<step number="5" subagent="project-manager" name="document_recap">
+<step number="5" name="document_recap">
 
 ### Step 5: Create Recap Document
 
-Use the project-manager subagent to create a recap document in .agent-os/recaps/ folder that summarizes what was built for this spec.
+Create a recap document in `.agent-os/recaps/` summarizing what was built, referencing the spec folder and spec-lite summary.
 
 <instructions>
-  ACTION: Use project-manager subagent
-  REQUEST: "Create recap document for current spec:
-            - Create file: .agent-os/recaps/[SPEC_FOLDER_NAME].md
-            - Use template format with completed features summary
-            - Include context from spec-lite.md
-            - Document: [SPEC_FOLDER_PATH]"
-  WAIT: For recap document creation
-  PROCESS: Verify file is created with proper content
+  ACTION: Create `.agent-os/recaps/[SPEC_FOLDER_NAME].md`
+  TEMPLATE: Use the recap template below and link back to the spec folder
+  CONTENT: Summarize outcomes, include key bullet points, reference spec-lite context
+  VERIFY: Confirm the recap accurately reflects shipped work
 </instructions>
 
 <recap_template>
@@ -177,11 +164,11 @@ Use the project-manager subagent to create a recap document in .agent-os/recaps/
 
 </step>
 
-<step number="6" subagent="project-manager" name="completion_summary">
+<step number="6" name="completion_summary">
 
 ### Step 6: Completion Summary
 
-Use the project-manager subagent to create a structured summary message with emojis showing what was done, any issues, testing instructions, and PR link.
+Prepare a structured summary message (using the template below) that covers what was done, issues encountered, testing steps, and includes the PR link.
 
 <summary_template>
   ## ✅ What's been done
@@ -225,11 +212,11 @@ Use the project-manager subagent to create a structured summary message with emo
 
 </step>
 
-<step number="7" subagent="project-manager" name="completion_notification">
+<step number="7" name="completion_notification">
 
 ### Step 7: Task Completion Notification
 
-Use the project-manager subagent to play a system sound to alert the user that tasks are complete.
+Play a completion notification (e.g., `afplay /System/Library/Sounds/Glass.aiff` on macOS) or send an equivalent alert to signal the human operator that work is finished.
 
 <notification_command>
   afplay /System/Library/Sounds/Glass.aiff

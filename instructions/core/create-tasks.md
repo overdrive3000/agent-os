@@ -18,11 +18,11 @@ With the user's approval, proceed to creating a tasks list based on the current 
 
 <process_flow>
 
-<step number="1" subagent="file-creator" name="create_tasks">
+<step number="1" name="create_tasks">
 
 ### Step 1: Create tasks.md
 
-Use the file-creator subagent to create file: tasks.md inside of the current feature's spec folder.
+Create `tasks.md` inside the current feature's spec folder (manually or with your tool's automation). Use the template below as a starting point and tailor it to the spec.
 
 <file_template>
   <header>

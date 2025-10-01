@@ -68,11 +68,11 @@ Search and extract relevant sections from technical-spec.md to understand the te
 
 </step>
 
-<step number="3" subagent="context-fetcher" name="best_practices_review">
+<step number="3" name="best_practices_review">
 
 ### Step 3: Best Practices Review
 
-Use the context-fetcher subagent to retrieve relevant sections from @.agent-os/standards/best-practices.md that apply to the current task's technology stack and feature type.
+Review the relevant sections from @.agent-os/standards/best-practices.md that apply to the current task's technology stack and feature type. If the content is not already in context, read only the sections you need (or trigger the appropriate command in your tool) before proceeding.
 
 <selective_reading>
   <search_best_practices>
@@ -85,23 +85,19 @@ Use the context-fetcher subagent to retrieve relevant sections from @.agent-os/s
 </selective_reading>
 
 <instructions>
-  ACTION: Use context-fetcher subagent
-  REQUEST: "Find best practices sections relevant to:
-            - Task's technology stack: [CURRENT_TECH]
-            - Feature type: [CURRENT_FEATURE_TYPE]
-            - Testing approaches needed
-            - Code organization patterns"
-  PROCESS: Returned best practices
-  APPLY: Relevant patterns to implementation
+  ACTION: Load best-practices guidance manually or via your tool's command pack
+  TARGET: Sections covering current tech stack, feature type, testing approaches, and organization patterns
+  CONSTRAINT: Avoid loading entire documents when not needed
+  APPLY: Incorporate the relevant guidance while implementing the task
 </instructions>
 
 </step>
 
-<step number="4" subagent="context-fetcher" name="code_style_review">
+<step number="4" name="code_style_review">
 
 ### Step 4: Code Style Review
 
-Use the context-fetcher subagent to retrieve relevant code style rules from @.agent-os/standards/code-style.md for the languages and file types being used in this task.
+Consult @.agent-os/standards/code-style.md (and any language-specific sub-guides) for the languages and file types in scope. Load only the relevant sections if they are not already visible.
 
 <selective_reading>
   <search_code_style>
@@ -114,14 +110,9 @@ Use the context-fetcher subagent to retrieve relevant code style rules from @.ag
 </selective_reading>
 
 <instructions>
-  ACTION: Use context-fetcher subagent
-  REQUEST: "Find code style rules for:
-            - Languages: [LANGUAGES_IN_TASK]
-            - File types: [FILE_TYPES_BEING_MODIFIED]
-            - Component patterns: [PATTERNS_BEING_IMPLEMENTED]
-            - Testing style guidelines"
-  PROCESS: Returned style rules
-  APPLY: Relevant formatting and patterns
+  ACTION: Load style rules manually or via your tool's command pack
+  TARGET: Languages, file types, component patterns, and testing style guidelines involved in this task
+  APPLY: Follow the referenced rules while editing files and writing tests
 </instructions>
 
 </step>
@@ -188,11 +179,11 @@ Execute the parent task and all sub-tasks in order using test-driven development
 
 </step>
 
-<step number="6" subagent="test-runner" name="task_test_verification">
+<step number="6" name="task_test_verification">
 
 ### Step 6: Task-Specific Test Verification
 
-Use the test-runner subagent to run and verify only the tests specific to this parent task (not the full test suite) to ensure the feature is working correctly.
+Run and verify only the tests specific to this parent task (not the full suite) to ensure the feature behaves correctly. Use your tool’s testing command if available, or execute the tests manually from the terminal.
 
 <focused_test_execution>
   <run_only>
@@ -216,12 +207,11 @@ Use the test-runner subagent to run and verify only the tests specific to this p
 </final_verification>
 
 <instructions>
-  ACTION: Use test-runner subagent
-  REQUEST: "Run tests for [this parent task's test files]"
-  WAIT: For test-runner analysis
-  PROCESS: Returned failure information
-  VERIFY: 100% pass rate for task-specific tests
-  CONFIRM: This feature's tests are complete
+  ACTION: Run the focused test command (tool shortcut or manual CLI)
+  SCOPE: Tests written or updated for this parent task only
+  PROCESS: Capture failures with file/line context and summarize root causes
+  VERIFY: Achieve a 100% pass rate before proceeding
+  CONFIRM: This task’s tests are complete and reflected in the summary
 </instructions>
 
 </step>
