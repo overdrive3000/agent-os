@@ -175,6 +175,18 @@ if [ "$IS_FROM_BASE" = true ]; then
     echo ""
     echo "📥 Installing standards files to $INSTALL_DIR/standards/"
     copy_directory "$STANDARDS_SOURCE" "$INSTALL_DIR/standards" "$OVERWRITE_STANDARDS"
+
+    echo ""
+    echo "📥 Installing AGENTS templates to $INSTALL_DIR/agents/"
+    copy_directory "$BASE_AGENT_OS/agents" "$INSTALL_DIR/agents" "$OVERWRITE_INSTRUCTIONS"
+
+    echo ""
+    echo "📥 Installing Cursor command pack to $INSTALL_DIR/cursor/commands/"
+    copy_directory "$BASE_AGENT_OS/cursor/commands" "$INSTALL_DIR/cursor/commands" "$OVERWRITE_INSTRUCTIONS"
+
+    echo ""
+    echo "📥 Installing Codex command pack to $INSTALL_DIR/codex/commands/"
+    copy_directory "$BASE_AGENT_OS/codex/commands" "$INSTALL_DIR/codex/commands" "$OVERWRITE_INSTRUCTIONS"
 else
     # Running directly from GitHub - download from GitHub
     if [ -z "$PROJECT_TYPE" ]; then
@@ -241,28 +253,23 @@ fi
 if [ "$CURSOR" = true ]; then
     echo ""
     echo "📥 Installing Cursor support..."
-    mkdir -p "./.cursor/rules"
+    mkdir -p "./.cursor/commands"
 
-    echo "  📂 Rules:"
+    SOURCE_CURSOR_PACK="$INSTALL_DIR/cursor/commands"
 
-    if [ "$IS_FROM_BASE" = true ]; then
-        # Convert commands from base installation to Cursor rules
-        for cmd in plan-product create-spec create-tasks execute-tasks analyze-product; do
-            if [ -f "$BASE_AGENT_OS/commands/${cmd}.md" ]; then
-                convert_to_cursor_rule "$BASE_AGENT_OS/commands/${cmd}.md" "./.cursor/rules/${cmd}.mdc"
-            else
-                echo "  ⚠️  Warning: ${cmd}.md not found in base installation"
-            fi
-        done
+    if [ -d "$SOURCE_CURSOR_PACK" ]; then
+        echo "  📂 Commands:"
+        copy_directory "$SOURCE_CURSOR_PACK" "./.cursor/commands" "$OVERWRITE_INSTRUCTIONS"
     else
-        # Download from GitHub and convert when using --no-base
-        echo "  Downloading and converting from GitHub..."
+        echo "  ⚠️  Cursor command pack not found in installation."
+        echo "  ⚠️  Falling back to legacy rule conversion"
+        mkdir -p "./.cursor/rules"
+
         for cmd in plan-product create-spec create-tasks execute-tasks analyze-product; do
-            TEMP_FILE="/tmp/${cmd}.md"
-            curl -s -o "$TEMP_FILE" "${BASE_URL}/commands/${cmd}.md"
-            if [ -f "$TEMP_FILE" ]; then
-                convert_to_cursor_rule "$TEMP_FILE" "./.cursor/rules/${cmd}.mdc"
-                rm "$TEMP_FILE"
+            if [ -f "$INSTALL_DIR/commands/${cmd}.md" ]; then
+                convert_to_cursor_rule "$INSTALL_DIR/commands/${cmd}.md" "./.cursor/rules/${cmd}.mdc"
+            else
+                echo "  ⚠️  Warning: ${cmd}.md not available for conversion"
             fi
         done
     fi
@@ -275,6 +282,9 @@ echo ""
 echo "📍 Project-level files installed to:"
 echo "   .agent-os/instructions/    - Agent OS instructions"
 echo "   .agent-os/standards/       - Development standards"
+echo "   .agent-os/agents/          - Layered AGENTS templates"
+echo "   .agent-os/cursor/commands/ - Cursor command pack"
+echo "   .agent-os/codex/commands/  - Codex prompt pack"
 
 if [ "$CLAUDE_CODE" = true ]; then
     echo "   .claude/commands/          - Claude Code commands"
@@ -282,7 +292,7 @@ if [ "$CLAUDE_CODE" = true ]; then
 fi
 
 if [ "$CURSOR" = true ]; then
-    echo "   .cursor/rules/             - Cursor command rules"
+    echo "   .cursor/commands/          - Cursor chat commands"
 fi
 
 echo ""
@@ -296,16 +306,28 @@ if [ "$CLAUDE_CODE" = true ]; then
     echo "  /plan-product    - Set the mission & roadmap for a new product"
     echo "  /analyze-product - Set up the mission and roadmap for an existing product"
     echo "  /create-spec     - Create a spec for a new feature"
+    echo "  /create-tasks    - Build a TDD task list for a spec"
     echo "  /execute-tasks   - Build and ship code for a new feature"
     echo ""
 fi
 
 if [ "$CURSOR" = true ]; then
     echo "Cursor useage:"
-    echo "  @plan-product    - Set the mission & roadmap for a new product"
-    echo "  @analyze-product - Set up the mission and roadmap for an existing product"
-    echo "  @create-spec     - Create a spec for a new feature"
-    echo "  @execute-tasks   - Build and ship code for a new feature"
+    echo "  /plan-product    - Set the mission & roadmap for a new product"
+    echo "  /analyze-product - Set up the mission and roadmap for an existing product"
+    echo "  /create-spec     - Create a spec for a new feature"
+    echo "  /create-tasks    - Build a TDD task list for a spec"
+    echo "  /execute-tasks   - Build and ship code for a new feature"
+    echo ""
+fi
+
+if [ -d "./.agent-os/codex/commands" ]; then
+    echo "Codex CLI usage:"
+    echo "  codex exec --prompt plan-product"
+    echo "  codex exec --prompt analyze-product"
+    echo "  codex exec --prompt create-spec"
+    echo "  codex exec --prompt create-tasks"
+    echo "  codex exec --prompt execute-tasks"
     echo ""
 fi
 

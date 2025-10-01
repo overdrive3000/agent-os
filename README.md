@@ -14,6 +14,10 @@ Use it with:
 
 ✅ Any language or framework.
 
+### Command-Driven Workflow
+
+Agent OS ships layered `AGENTS.md` instructions plus command packs for Cursor and Codex so humans can trigger the same `/plan-product`, `/create-spec`, `/create-tasks`, and `/execute-tasks` flows in any tool. Install the base system, customize `~/.agent-os/agents/`, and run the provided installers to copy the packs into each project.
+
 ---
 
 ### Documentation & Installation

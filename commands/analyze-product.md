@@ -1,6 +1,10 @@
 # Analyze Product
 
-Analyze your product's codebase and install Agent OS
+Analyze an existing codebase and install Agent OS documentation.
 
-Refer to the instructions located in this file:
-@.agent-os/instructions/core/analyze-product.md
+Use the layered guidance provided by Agent OS:
+- Global context: `@AGENTS.md`
+- Project context: `@./AGENTS.md`
+- Workflow details: `@.agent-os/instructions/core/analyze-product.md`
+
+Run this command to inspect the current product, capture completed work, and align future specs with reality.
