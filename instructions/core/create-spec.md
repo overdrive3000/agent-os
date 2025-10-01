@@ -18,11 +18,11 @@ Generate detailed feature specifications aligned with product roadmap and missio
 
 <process_flow>
 
-<step number="1" subagent="context-fetcher" name="spec_initiation">
+<step number="1" name="spec_initiation">
 
 ### Step 1: Spec Initiation
 
-Use the context-fetcher subagent to identify spec initiation method by either finding the next uncompleted roadmap item when user asks "what's next?" or accepting a specific spec idea from the user.
+Identify the spec initiation method by either selecting the next uncompleted roadmap item (when the user asks "what's next?") or accepting a specific idea from the user. If your tool offers an assistive workflow for this step you may trigger it, otherwise read the roadmap and capture the request manually.
 
 <option_a_flow>
   <trigger_phrases>
@@ -44,11 +44,11 @@ Use the context-fetcher subagent to identify spec initiation method by either fi
 
 </step>
 
-<step number="2" subagent="context-fetcher" name="context_gathering">
+<step number="2" name="context_gathering">
 
 ### Step 2: Context Gathering (Conditional)
 
-Use the context-fetcher subagent to read @.agent-os/product/mission-lite.md and @.agent-os/product/tech-stack.md only if not already in context to ensure minimal context for spec alignment.
+Read @.agent-os/product/mission-lite.md and @.agent-os/product/tech-stack.md (or their lite summaries) if they are not already in context. Summarize only the relevant portions for this spec to keep prompts concise.
 
 <conditional_logic>
   IF both mission-lite.md AND tech-stack.md already read in current context:
@@ -68,11 +68,11 @@ Use the context-fetcher subagent to read @.agent-os/product/mission-lite.md and 
 
 </step>
 
-<step number="3" subagent="context-fetcher" name="requirements_clarification">
+<step number="3" name="requirements_clarification">
 
 ### Step 3: Requirements Clarification
 
-Use the context-fetcher subagent to clarify scope boundaries and technical considerations by asking numbered questions as needed to ensure clear requirements before proceeding.
+Ask numbered questions as needed to clarify scope boundaries and technical considerations before proceeding. Document responses inline so the spec captures the agreed requirements.
 
 <clarification_areas>
   <scope>
@@ -96,23 +96,19 @@ Use the context-fetcher subagent to clarify scope boundaries and technical consi
 
 </step>
 
-<step number="4" subagent="date-checker" name="date_determination">
+<step number="4" name="date_determination">
 
 ### Step 4: Date Determination
 
-Use the date-checker subagent to determine the current date in YYYY-MM-DD format for folder naming. The subagent will output today's date which will be used in subsequent steps.
-
-<subagent_output>
-  The date-checker subagent will provide the current date in YYYY-MM-DD format at the end of its response. Store this date for use in folder naming in step 5.
-</subagent_output>
+Determine the current date in YYYY-MM-DD format for folder naming using your environment (e.g., `date +%Y-%m-%d`). Store this value for the folder and file headers in later steps.
 
 </step>
 
-<step number="5" subagent="file-creator" name="spec_folder_creation">
+<step number="5" name="spec_folder_creation">
 
 ### Step 5: Spec Folder Creation
 
-Use the file-creator subagent to create directory: .agent-os/specs/YYYY-MM-DD-spec-name/ using the date from step 4.
+Create the directory `.agent-os/specs/YYYY-MM-DD-spec-name/` (manually or with automation) using the date from step 4. Ensure the spec name is descriptive, five words or fewer, and formatted in kebab-case.
 
 Use kebab-case for spec name. Maximum 5 words in name.
 
@@ -134,11 +130,11 @@ Use kebab-case for spec name. Maximum 5 words in name.
 
 </step>
 
-<step number="6" subagent="file-creator" name="create_spec_md">
+<step number="6" name="create_spec_md">
 
 ### Step 6: Create spec.md
 
-Use the file-creator subagent to create the file: .agent-os/specs/YYYY-MM-DD-spec-name/spec.md using this template:
+Create `.agent-os/specs/YYYY-MM-DD-spec-name/spec.md` using the following template (manual editing or your tool’s snippet support is fine):
 
 <file_template>
   <header>
@@ -227,11 +223,11 @@ Use the file-creator subagent to create the file: .agent-os/specs/YYYY-MM-DD-spe
 
 </step>
 
-<step number="7" subagent="file-creator" name="create_spec_lite_md">
+<step number="7" name="create_spec_lite_md">
 
 ### Step 7: Create spec-lite.md
 
-Use the file-creator subagent to create the file: .agent-os/specs/YYYY-MM-DD-spec-name/spec-lite.md for the purpose of establishing a condensed spec for efficient AI context usage.
+Create `.agent-os/specs/YYYY-MM-DD-spec-name/spec-lite.md` as a condensed summary for efficient AI context usage.
 
 <file_template>
   <header>
@@ -257,11 +253,11 @@ Use the file-creator subagent to create the file: .agent-os/specs/YYYY-MM-DD-spe
 
 </step>
 
-<step number="8" subagent="file-creator" name="create_technical_spec">
+<step number="8" name="create_technical_spec">
 
 ### Step 8: Create Technical Specification
 
-Use the file-creator subagent to create the file: sub-specs/technical-spec.md using this template:
+Create `sub-specs/technical-spec.md` using the template below. If a subdirectory does not exist, create it before writing the file.
 
 <file_template>
   <header>
@@ -308,11 +304,11 @@ Use the file-creator subagent to create the file: sub-specs/technical-spec.md us
 
 </step>
 
-<step number="9" subagent="file-creator" name="create_database_schema">
+<step number="9" name="create_database_schema">
 
 ### Step 9: Create Database Schema (Conditional)
 
-Use the file-creator subagent to create the file: sub-specs/database-schema.md ONLY IF database changes needed for this task.
+When database changes are required, create `sub-specs/database-schema.md` using the template below.
 
 <decision_tree>
   IF spec_requires_database_changes:
@@ -350,11 +346,11 @@ Use the file-creator subagent to create the file: sub-specs/database-schema.md O
 
 </step>
 
-<step number="10" subagent="file-creator" name="create_api_spec">
+<step number="10" name="create_api_spec">
 
 ### Step 10: Create API Specification (Conditional)
 
-Use the file-creator subagent to create file: sub-specs/api-spec.md ONLY IF API changes needed.
+When API updates are needed, create `sub-specs/api-spec.md` using the template below.
 
 <decision_tree>
   IF spec_requires_api_changes:

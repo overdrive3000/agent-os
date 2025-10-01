@@ -185,8 +185,8 @@ if [ "$IS_FROM_BASE" = true ]; then
     copy_directory "$BASE_AGENT_OS/cursor/commands" "$INSTALL_DIR/cursor/commands" "$OVERWRITE_INSTRUCTIONS"
 
     echo ""
-    echo "📥 Installing Codex command pack to $INSTALL_DIR/codex/commands/"
-    copy_directory "$BASE_AGENT_OS/codex/commands" "$INSTALL_DIR/codex/commands" "$OVERWRITE_INSTRUCTIONS"
+    echo "📥 Installing Codex prompt pack to $INSTALL_DIR/codex/prompts/"
+    copy_directory "$BASE_AGENT_OS/codex/prompts" "$INSTALL_DIR/codex/prompts" "$OVERWRITE_INSTRUCTIONS"
 else
     # Running directly from GitHub - download from GitHub
     if [ -z "$PROJECT_TYPE" ]; then
@@ -284,7 +284,7 @@ echo "   .agent-os/instructions/    - Agent OS instructions"
 echo "   .agent-os/standards/       - Development standards"
 echo "   .agent-os/agents/          - Layered AGENTS templates"
 echo "   .agent-os/cursor/commands/ - Cursor command pack"
-echo "   .agent-os/codex/commands/  - Codex prompt pack"
+echo "   .agent-os/codex/prompts/   - Codex prompt pack"
 
 if [ "$CLAUDE_CODE" = true ]; then
     echo "   .claude/commands/          - Claude Code commands"
@@ -321,7 +321,7 @@ if [ "$CURSOR" = true ]; then
     echo ""
 fi
 
-if [ -d "./.agent-os/codex/commands" ]; then
+if [ -d "./.agent-os/codex/prompts" ]; then
     echo "Codex CLI usage:"
     echo "  codex exec --prompt plan-product"
     echo "  codex exec --prompt analyze-product"

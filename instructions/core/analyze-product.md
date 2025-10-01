@@ -61,11 +61,11 @@ Perform a deep codebase analysis of the current codebase to understand current s
 
 </step>
 
-<step number="2" subagent="context-fetcher" name="gather_product_context">
+<step number="2" name="gather_product_context">
 
 ### Step 2: Gather Product Context
 
-Use the context-fetcher subagent to supplement codebase analysis with business context and future plans.
+Supplement the codebase analysis with business context and future plans by asking the user the following questions (or reviewing existing documentation). Capture numbered responses for clarity.
 
 <context_questions>
   Based on my analysis of your codebase, I can see you're building [OBSERVED_PRODUCT_TYPE].

@@ -18,11 +18,11 @@ Generate product docs for new projects: mission, tech-stack and roadmap files fo
 
 <process_flow>
 
-<step number="1" subagent="context-fetcher" name="gather_user_input">
+<step number="1" name="gather_user_input">
 
 ### Step 1: Gather User Input
 
-Use the context-fetcher subagent to collect all required inputs from the user including main idea, key features (minimum 3), target users (minimum 1), and tech stack preferences with blocking validation before proceeding.
+Collect all required inputs from the user—including main idea, key features (minimum 3), target users (minimum 1), and tech stack preferences—before proceeding. Ask numbered follow-up questions if any details are missing.
 
 <data_sources>
   <primary>user_direct_input</primary>
@@ -44,11 +44,11 @@ Use the context-fetcher subagent to collect all required inputs from the user in
 
 </step>
 
-<step number="2" subagent="file-creator" name="create_documentation_structure">
+<step number="2" name="create_documentation_structure">
 
 ### Step 2: Create Documentation Structure
 
-Use the file-creator subagent to create the following file_structure with validation for write permissions and protection against overwriting existing files:
+Create the following file structure (manually or with automation) ensuring parent directories exist and existing files are not overwritten without confirmation:
 
 <file_structure>
   .agent-os/
@@ -61,11 +61,11 @@ Use the file-creator subagent to create the following file_structure with valida
 
 </step>
 
-<step number="3" subagent="file-creator" name="create_mission_md">
+<step number="3" name="create_mission_md">
 
 ### Step 3: Create mission.md
 
-Use the file-creator subagent to create the file: .agent-os/product/mission.md and use the following template:
+Create `.agent-os/product/mission.md` using the template below.
 
 <file_template>
   <header>
@@ -173,11 +173,11 @@ Use the file-creator subagent to create the file: .agent-os/product/mission.md a
 
 </step>
 
-<step number="4" subagent="file-creator" name="create_tech_stack_md">
+<step number="4" name="create_tech_stack_md">
 
 ### Step 4: Create tech-stack.md
 
-Use the file-creator subagent to create the file: .agent-os/product/tech-stack.md and use the following template:
+Create `.agent-os/product/tech-stack.md` using the following template:
 
 <file_template>
   <header>
@@ -233,11 +233,11 @@ Use the file-creator subagent to create the file: .agent-os/product/tech-stack.m
 
 </step>
 
-<step number="5" subagent="file-creator" name="create_mission_lite_md">
+<step number="5" name="create_mission_lite_md">
 
 ### Step 5: Create mission-lite.md
 
-Use the file-creator subagent to create the file: .agent-os/product/mission-lite.md for the purpose of establishing a condensed mission for efficient AI context usage.
+Create `.agent-os/product/mission-lite.md` as a condensed mission reference for efficient AI context usage.
 
 Use the following template:
 
@@ -273,11 +273,11 @@ Use the following template:
 
 </step>
 
-<step number="6" subagent="file-creator" name="create_roadmap_md">
+<step number="6" name="create_roadmap_md">
 
 ### Step 6: Create roadmap.md
 
-Use the file-creator subagent to create the following file: .agent-os/product/roadmap.md using the following template:
+Create `.agent-os/product/roadmap.md` using the following template:
 
 <file_template>
   <header>

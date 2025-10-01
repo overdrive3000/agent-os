@@ -44,18 +44,16 @@ Identify which tasks to execute from the spec (using spec_srd_reference file pat
 
 </step>
 
-<step number="2" subagent="context-fetcher" name="context_analysis">
+<step number="2" name="context_analysis">
 
 ### Step 2: Context Analysis
 
-Use the context-fetcher subagent to gather minimal context for task understanding by always loading spec tasks.md, and conditionally loading @.agent-os/product/mission-lite.md, spec-lite.md, and sub-specs/technical-spec.md if not already in context.
+Gather the minimal context needed for task understanding by referencing `tasks.md`, `mission-lite.md`, `spec-lite.md`, and `sub-specs/technical-spec.md`. If your tool supports automated context loading, trigger it; otherwise read or summarize the relevant sections manually.
 
 <instructions>
-  ACTION: Use context-fetcher subagent to:
-    - REQUEST: "Get product pitch from mission-lite.md"
-    - REQUEST: "Get spec summary from spec-lite.md"
-    - REQUEST: "Get technical approach from technical-spec.md"
-  PROCESS: Returned information
+  ACTION: Load the required documents (manually or via tool command)
+  FOCUS: mission-lite pitch, spec-lite summary, technical-spec approach details, and active tasks
+  OUTPUT: Summaries sufficient for the current task selection; avoid duplicating context already shared
 </instructions>
 
 
@@ -72,19 +70,19 @@ Use the context-fetcher subagent to gather minimal context for task understandin
 
 </step>
 
-<step number="3" subagent="git-workflow" name="git_branch_management">
+<step number="3" name="git_branch_management">
 
 ### Step 3: Git Branch Management
 
-Use the git-workflow subagent to manage git branches to ensure proper isolation by creating or switching to the appropriate branch for the spec.
+Ensure you are on the correct git branch for the spec. If your tool has an automated git workflow helper, invoke it; otherwise perform the steps manually (check status, create/switch branch, clear uncommitted changes).
 
 <instructions>
-  ACTION: Use git-workflow subagent
-  REQUEST: "Check and manage branch for spec: [SPEC_FOLDER]
-            - Create branch if needed
-            - Switch to correct branch
-            - Handle any uncommitted changes"
-  WAIT: For branch setup completion
+  ACTION: Confirm you are on the branch named after the spec folder (date removed)
+  STEPS:
+    - `git status` to ensure a clean working tree
+    - `git checkout -b <spec-branch>` if the branch does not exist
+    - Resolve or stash uncommitted changes before continuing
+  RESULT: Clean workspace on the appropriate feature branch
 </instructions>
 
 <branch_naming>

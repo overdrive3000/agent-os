@@ -195,13 +195,13 @@ install_from_github() {
 
     # Download Codex command pack
     echo ""
-    echo "📥 Downloading Codex command pack to $target_dir/codex/commands/"
+    echo "📥 Downloading Codex prompt pack to $target_dir/codex/prompts/"
     for cmd in plan-product create-spec create-tasks execute-tasks analyze-product; do
-        mkdir -p "$target_dir/codex/commands"
-        download_file "${BASE_URL}/codex/commands/${cmd}.md" \
-            "$target_dir/codex/commands/${cmd}.md" \
+        mkdir -p "$target_dir/codex/prompts"
+        download_file "${BASE_URL}/codex/prompts/${cmd}.md" \
+            "$target_dir/codex/prompts/${cmd}.md" \
             "$overwrite_inst" \
-            "codex/commands/${cmd}.md"
+            "codex/prompts/${cmd}.md"
     done
 
     # Download commands (only if requested)
