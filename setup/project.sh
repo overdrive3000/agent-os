@@ -187,6 +187,11 @@ if [ "$IS_FROM_BASE" = true ]; then
     echo ""
     echo "📥 Installing Codex prompt pack to $INSTALL_DIR/codex/prompts/"
     copy_directory "$BASE_AGENT_OS/codex/prompts" "$INSTALL_DIR/codex/prompts" "$OVERWRITE_INSTRUCTIONS"
+
+    USER_CODEX_PROMPTS="$HOME/.codex/prompts"
+    echo ""
+    echo "📥 Syncing Codex prompts to $USER_CODEX_PROMPTS/"
+    copy_directory "$INSTALL_DIR/codex/prompts" "$USER_CODEX_PROMPTS" "$OVERWRITE_INSTRUCTIONS"
 else
     # Running directly from GitHub - download from GitHub
     if [ -z "$PROJECT_TYPE" ]; then
@@ -197,6 +202,11 @@ else
 
     # Install instructions and standards from GitHub (no commands folder needed)
     install_from_github "$INSTALL_DIR" "$OVERWRITE_INSTRUCTIONS" "$OVERWRITE_STANDARDS" false
+
+    USER_CODEX_PROMPTS="$HOME/.codex/prompts"
+    echo ""
+    echo "📥 Syncing Codex prompts to $USER_CODEX_PROMPTS/"
+    copy_directory "$INSTALL_DIR/codex/prompts" "$USER_CODEX_PROMPTS" "$OVERWRITE_INSTRUCTIONS"
 fi
 
 # Handle Claude Code installation for project
@@ -323,11 +333,12 @@ fi
 
 if [ -d "./.agent-os/codex/prompts" ]; then
     echo "Codex CLI usage:"
-    echo "  codex exec --prompt plan-product"
-    echo "  codex exec --prompt analyze-product"
-    echo "  codex exec --prompt create-spec"
-    echo "  codex exec --prompt create-tasks"
-    echo "  codex exec --prompt execute-tasks"
+    echo "  Launch codex CLI and type /plan-product"
+    echo "  /analyze-product"
+    echo "  /create-spec"
+    echo "  /create-tasks"
+    echo "  /execute-tasks"
+    echo "  (Prompts are installed in ~/.codex/prompts/)"
     echo ""
 fi
 
