@@ -22,7 +22,7 @@ Agent OS ships layered `AGENTS.md` instructions plus command packs for Cursor an
 
 - **Base install (once per machine)**
   ```bash
-  curl -sSL https://raw.githubusercontent.com/buildermethods/agent-os/main/setup/base.sh | bash -s -- --cursor
+  curl -sSL https://raw.githubusercontent.com/overdrive3000/agent-os/main/setup/base.sh | bash -s -- --cursor
   ```
   This seeds `~/.agent-os/` with standards, instructions, layered AGENTS templates, and the Cursor command pack.
 - **Customize defaults**: edit `~/.agent-os/standards/` and `~/.agent-os/agents/` so future projects inherit your opinions.
