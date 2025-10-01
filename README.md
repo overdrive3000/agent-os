@@ -49,13 +49,9 @@ Agent OS ships layered `AGENTS.md` instructions plus command packs for Cursor an
   ~/.agent-os/setup/project.sh
   ```
   The project copy lives in `.agent-os/` and includes prompt templates under `.agent-os/codex/prompts/`.
-- **Expose prompts to Codex**: copy or symlink them into Codex’s prompt directory (created automatically if needed):
-  ```bash
-  mkdir -p ~/.codex/prompts
-  cp .agent-os/codex/prompts/*.md ~/.codex/prompts/
-  ```
-- **Invoke workflows**: use `codex exec --prompt plan-product`, `codex exec --prompt create-spec`, `codex exec --prompt create-tasks`, `codex exec --prompt execute-tasks`, and `codex exec --prompt analyze-product`. The prompts reference the layered AGENTS files plus the detailed instructions under `.agent-os/instructions/core/`.
-- **Refresh when updating**: after modifying AGENTS or standards, rerun the project installer and recopy prompts so Codex reads the latest guidance.
+- **Prompts are synced automatically**: the installer copies Agent OS prompts to `.agent-os/codex/prompts/` and mirrors them to `~/.codex/prompts/`. Restart Codex CLI if it was already running.
+- **Invoke workflows**: launch `codex` and use slash commands `/plan-product`, `/analyze-product`, `/create-spec`, `/create-tasks`, and `/execute-tasks`. Each prompt pulls in the layered AGENTS plus `.agent-os/instructions/core/` guidance.
+- **Refresh when updating**: after modifying AGENTS or standards, rerun the project installer (with overwrite flags as needed) so both the project copy and `~/.codex/prompts/` stay current.
 
 ---
 
