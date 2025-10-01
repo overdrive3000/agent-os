@@ -171,6 +171,44 @@ install_from_github() {
             "standards/code-style/${file}.md"
     done
 
+    # Download SRE project type resources
+    echo ""
+    echo "📥 Downloading SRE project type instructions to $target_dir/project_types/sre/instructions/"
+    mkdir -p "$target_dir/project_types/sre/instructions/core"
+    mkdir -p "$target_dir/project_types/sre/instructions/meta"
+
+    for file in analyze-product create-spec create-tasks execute-task execute-tasks plan-product post-execution-tasks; do
+        download_file "${BASE_URL}/project_types/sre/instructions/core/${file}.md" \
+            "$target_dir/project_types/sre/instructions/core/${file}.md" \
+            "$overwrite_inst" \
+            "project_types/sre/instructions/core/${file}.md"
+    done
+
+    for file in pre-flight post-flight; do
+        download_file "${BASE_URL}/project_types/sre/instructions/meta/${file}.md" \
+            "$target_dir/project_types/sre/instructions/meta/${file}.md" \
+            "$overwrite_inst" \
+            "project_types/sre/instructions/meta/${file}.md"
+    done
+
+    echo ""
+    echo "📥 Downloading SRE project type standards to $target_dir/project_types/sre/standards/"
+    mkdir -p "$target_dir/project_types/sre/standards/code-style"
+
+    for file in best-practices code-style tech-stack; do
+        download_file "${BASE_URL}/project_types/sre/standards/${file}.md" \
+            "$target_dir/project_types/sre/standards/${file}.md" \
+            "$overwrite_std" \
+            "project_types/sre/standards/${file}.md"
+    done
+
+    for file in bash-style kubernetes-style terraform-style; do
+        download_file "${BASE_URL}/project_types/sre/standards/code-style/${file}.md" \
+            "$target_dir/project_types/sre/standards/code-style/${file}.md" \
+            "$overwrite_std" \
+            "project_types/sre/standards/code-style/${file}.md"
+    done
+
     # Download AGENTS templates
     echo ""
     echo "📥 Downloading AGENTS templates to $target_dir/agents/"
